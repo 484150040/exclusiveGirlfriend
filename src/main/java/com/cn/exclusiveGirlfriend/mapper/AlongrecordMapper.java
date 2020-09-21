@@ -1,5 +1,6 @@
 package com.cn.exclusiveGirlfriend.mapper;
 
+import com.cn.exclusiveGirlfriend.dataBean.AlongrecordDataBean;
 import com.cn.exclusiveGirlfriend.pojo.Alongrecord;
 import com.cn.exclusiveGirlfriend.pojo.AlongrecordExample;
 import java.util.List;
@@ -93,4 +94,12 @@ public interface AlongrecordMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(Alongrecord record);
+    /**
+     * @Author HONG
+     * @Description //TODO 相处记录模糊查询
+     * @Date 23:01 2020/9/21
+     * @Param [alongrecordDataBean]
+     * @return java.util.List<com.cn.exclusiveGirlfriend.pojo.Alongrecord>
+     **/
+    List<Alongrecord> selectAlongrecordAll(AlongrecordDataBean alongrecordDataBean);
 }

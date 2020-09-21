@@ -19,6 +19,8 @@ public class AlongrecordDataBean {
     private Integer limit;  //每页显示条数
     private String createtime;  //开始创建时间
     private String endtime;  //开始结束时间
+    private String aTime;  //约会创建时间
+    private String aTimeendtime;  //约会结束时间
     private Alongrecord alongrecord;  //相处记录
 
     @Override

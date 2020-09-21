@@ -283,8 +283,8 @@
       <if test="period.title!=null and period.title!=''">
         title = #{user.title},
       </if>
-      <if test="user.sex!=null and sex!=''">
-        and state = #{state.sex},
+      <if test="period.state!=null and period.state!=''">
+        and state = #{period.sex},
       </if>
       <if test="createtime!=null">
         and creattime &gt;=#{createtime}
