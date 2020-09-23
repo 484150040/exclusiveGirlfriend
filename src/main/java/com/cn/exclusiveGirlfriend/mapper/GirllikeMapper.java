@@ -1,5 +1,6 @@
 package com.cn.exclusiveGirlfriend.mapper;
 
+import com.cn.exclusiveGirlfriend.dataBean.GirllikeDataBean;
 import com.cn.exclusiveGirlfriend.pojo.Girllike;
 import com.cn.exclusiveGirlfriend.pojo.GirllikeExample;
 import java.util.List;
@@ -93,4 +94,12 @@ public interface GirllikeMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(Girllike record);
+    /**
+     * @Author HONG
+     * @Description //TODO 分页查询女朋友数据详情模糊查询
+     * @Date 1:29 2020/9/24
+     * @Param [girllikeDataBean]
+     * @return java.util.List<com.cn.exclusiveGirlfriend.pojo.Girllike>
+     **/
+    List<Girllike> selectGirllikeAll(GirllikeDataBean girllikeDataBean);
 }
