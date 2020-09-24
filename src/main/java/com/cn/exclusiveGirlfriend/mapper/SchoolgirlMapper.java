@@ -1,5 +1,6 @@
 package com.cn.exclusiveGirlfriend.mapper;
 
+import com.cn.exclusiveGirlfriend.dataBean.SchoolgirlDataBean;
 import com.cn.exclusiveGirlfriend.pojo.Schoolgirl;
 import com.cn.exclusiveGirlfriend.pojo.SchoolgirlExample;
 import java.util.List;
@@ -93,4 +94,12 @@ public interface SchoolgirlMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(Schoolgirl record);
+    /**
+    *@Description: 分页模糊查询数据(女生详情)
+    *@Param: [schoolgirlDataBean]
+    *@return: java.util.List<com.cn.exclusiveGirlfriend.pojo.Schoolgirl>
+    *@Author: Yang Fang Hong
+    *@date: 2020/9/24
+    */
+    List<Schoolgirl> selectSchoolgirlAll(SchoolgirlDataBean schoolgirlDataBean);
 }
