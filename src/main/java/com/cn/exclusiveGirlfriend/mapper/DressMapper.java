@@ -1,5 +1,6 @@
 package com.cn.exclusiveGirlfriend.mapper;
 
+import com.cn.exclusiveGirlfriend.dataBean.DressDataBean;
 import com.cn.exclusiveGirlfriend.pojo.Dress;
 import com.cn.exclusiveGirlfriend.pojo.DressExample;
 import java.util.List;
@@ -93,4 +94,12 @@ public interface DressMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(Dress record);
+    /**
+     * @Author HONG
+     * @Description //TODO 分页模糊查询数据用户（女朋友）服饰管理
+     * @Date 8:52 2020/9/24
+     * @Param [dressDataBean]
+     * @return java.util.List<com.cn.exclusiveGirlfriend.pojo.Dress>
+     **/
+    List<Dress> selectDressAll(DressDataBean dressDataBean);
 }
