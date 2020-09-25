@@ -89,17 +89,17 @@ public class ClockServiceimpl implements ClockService {
         if (Optional.ofNullable(clockDatabean).isPresent()) {
             ClockExample periodExample = new ClockExample();
             ClockExample.Criteria criteria = periodExample.createCriteria();
-            if (clockDatabean.getClock().getGlName()!=null){
-                criteria.andGlNameLike(clockDatabean.getClock().getGlName());
+            if (clockDatabean.getClock().getClTitle()!=null){
+                criteria.andClTitleEqualTo(clockDatabean.getClock().getClTitle());
             }
-            if (clockDatabean.getClock().getGlType()!=null){
-                criteria.andGlTypeEqualTo(clockDatabean.getClock().getGlType());
+            if (clockDatabean.getClock().getClContent()!=null){
+                criteria.andClContentEqualTo(clockDatabean.getClock().getClContent());
             }
-            if (clockDatabean.getClock().getGlState()!=null){
-                criteria.andGlStateEqualTo(clockDatabean.getClock().getGlState());
+            if (clockDatabean.getClock().getClState()!=null){
+                criteria.andClStateEqualTo(clockDatabean.getClock().getClState());
             }
-            if (clockDatabean.getClock().getGlLevel()!=null){
-                criteria.andGlLevelEqualTo(clockDatabean.getClock().getGlLevel());
+            if (clockDatabean.getClock().getCirculation()!=null){
+                criteria.andCirculationEqualTo(clockDatabean.getClock().getCirculation());
             }
             if (clockDatabean.getCreatetime()!=null){
                 criteria.andCreatetimeGreaterThanOrEqualTo(DateUtiles.parseDefaultDate(clockDatabean.getCreatetime()));

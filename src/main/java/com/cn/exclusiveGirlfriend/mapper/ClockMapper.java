@@ -1,5 +1,6 @@
 package com.cn.exclusiveGirlfriend.mapper;
 
+import com.cn.exclusiveGirlfriend.dataBean.ClockDatabean;
 import com.cn.exclusiveGirlfriend.pojo.Clock;
 import com.cn.exclusiveGirlfriend.pojo.ClockExample;
 import java.util.List;
@@ -93,4 +94,12 @@ public interface ClockMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(Clock record);
+    /**
+     * @Author HONG
+     * @Description //TODO 模糊分页查询记录时间
+     * @Date 1:06 2020/9/26
+     * @Param [clockDatabean]
+     * @return java.util.List<com.cn.exclusiveGirlfriend.pojo.Clock>
+     **/
+    List<Clock> selectClockAll(ClockDatabean clockDatabean);
 }
