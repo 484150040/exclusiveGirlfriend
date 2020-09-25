@@ -27,6 +27,13 @@ import java.util.Optional;
 public class GirllikeServiceimpl implements GirllikeService {
     @Autowired(required = false)
     private GirllikeMapper girllikeMapper;
+    /**
+    *@Description: 新增女朋友喜欢的物品数据
+    *@Param: [girllikeDataBean]
+    *@return: com.cn.exclusiveGirlfriend.common.ResultData
+    *@Author: Yang Fang Hong
+    *@date: 2020/9/25
+    */
     @Override
     public ResultData addGirllike(GirllikeDataBean girllikeDataBean) {
         Optional<Girllike> optionalUser = Optional.ofNullable(girllikeDataBean.getGirllike());
@@ -45,7 +52,7 @@ public class GirllikeServiceimpl implements GirllikeService {
     }
     /**
      * @Author HONG
-     * @Description //TODO 新增女朋友喜欢的物品数据
+     * @Description //TODO 修改女朋友喜欢的物品数据
      * @Date 1:19 2020/9/24
      * @Param [girllikeDataBean]
      * @return com.cn.exclusiveGirlfriend.common.ResultData

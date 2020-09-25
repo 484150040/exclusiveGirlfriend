@@ -1,5 +1,6 @@
 package com.cn.exclusiveGirlfriend.mapper;
 
+import com.cn.exclusiveGirlfriend.dataBean.LegalDatabean;
 import com.cn.exclusiveGirlfriend.pojo.Legal;
 import com.cn.exclusiveGirlfriend.pojo.LegalExample;
 import java.util.List;
@@ -93,4 +94,12 @@ public interface LegalMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(Legal record);
+    /**
+    *@Description: 模糊查询分页女生例假数据
+    *@Param: [legalDatabean]
+    *@return: java.util.List<com.cn.exclusiveGirlfriend.pojo.Legal>
+    *@Author: Yang Fang Hong
+    *@date: 2020/9/25
+    */
+    List<Legal> selectLegalAll(LegalDatabean legalDatabean);
 }
