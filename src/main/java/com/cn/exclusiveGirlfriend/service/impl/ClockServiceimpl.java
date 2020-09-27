@@ -27,6 +27,13 @@ import java.util.Optional;
 public class ClockServiceimpl implements ClockService {
     @Autowired(required = false)
     private ClockMapper clockMapper;
+    /**
+     *@Description: 新增记录时间
+     *@Param: [clockDatabean]
+     *@return: com.cn.exclusiveGirlfriend.common.ResultData
+     *@Author: Yang Fang Hong
+     *@date: 2020/9/25
+     */
     @Override
     public ResultData addClock(ClockDatabean clockDatabean) {
         Optional<Clock> optionalUser = Optional.ofNullable(clockDatabean.getClock());
@@ -43,7 +50,13 @@ public class ClockServiceimpl implements ClockService {
         }
         return new ResultData().error();
     }
-
+    /**
+     *@Description: 修改记录时间
+     *@Param: [clockDatabean]
+     *@return: com.cn.exclusiveGirlfriend.common.ResultData
+     *@Author: Yang Fang Hong
+     *@date: 2020/9/25
+     */
     @Override
     public ResultData updateClock(ClockDatabean clockDatabean) {
         ClockExample periodExample = new ClockExample();
@@ -83,7 +96,13 @@ public class ClockServiceimpl implements ClockService {
         }
         return new ResultData().error();
     }
-
+    /**
+     *@Description: 分页查询记录时间数据
+     *@Param: [clockDatabean]
+     *@return: com.cn.exclusiveGirlfriend.common.ResultData
+     *@Author: Yang Fang Hong
+     *@date: 2020/9/25
+     */
     @Override
     public ResultData selectClockAll(ClockDatabean clockDatabean) {
         if (Optional.ofNullable(clockDatabean).isPresent()) {

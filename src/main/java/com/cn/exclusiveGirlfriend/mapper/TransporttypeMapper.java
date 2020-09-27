@@ -1,5 +1,6 @@
 package com.cn.exclusiveGirlfriend.mapper;
 
+import com.cn.exclusiveGirlfriend.dataBean.TransportTypeDataBean;
 import com.cn.exclusiveGirlfriend.pojo.Transporttype;
 import com.cn.exclusiveGirlfriend.pojo.TransporttypeExample;
 import java.util.List;
@@ -93,4 +94,12 @@ public interface TransporttypeMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(Transporttype record);
+    /**
+     * @Author HONG
+     * @Description //TODO 分页模糊查询传输类型
+     * @Date 12:05 2020/9/27
+     * @Param [transportTypeDataBean]
+     * @return java.util.List<com.cn.exclusiveGirlfriend.pojo.Transporttype>
+     **/
+    List<Transporttype> selectTransporttypeAll(TransportTypeDataBean transportTypeDataBean);
 }
