@@ -22,6 +22,7 @@ public class AppTest
     {
 
     }
+/*
 
     public static void main(String[] args) {
 
@@ -63,5 +64,84 @@ public class AppTest
             }
         }
 
+    }
+*/
+
+    public static void main(String[] args) {
+
+        Scanner scanner=new Scanner(System.in);
+        System.out.println("请输入六件套数量");
+        //九件套12
+        // 六件套13+50【预定】校园六件套+1水洗棉六件套【预定】
+        //三件套179+1校园三件套+1校园水洗棉【三件套】
+        //  校园五件套五件套1
+        //【预定】校园七件套3
+        // 寝居大礼包【基础版】1
+        // 床帘
+        //床帘架
+        // 床垫
+        //被芯
+        //枕芯
+        Integer sun=scanner.nextInt();
+        System.out.println("请输入九件套数量");
+        Integer sun1=scanner.nextInt();
+        Double str=0.0;//六件套价格
+        Double str1=0.0;//九件套价格
+        Integer sum=sun+sun1;
+        if (sum<40){
+            str=sum*70*1.0;
+            str1=sum*92.5;
+        }
+        if (sum>=40&&sum<80){
+            str=40*70*1.0;
+            str+=(sum-40)*80*1.0;
+            //九件套
+            str1=40*92.5;
+            str1+=(sum-40)*102.5*1.0;
+        }
+        if (sum>=80){
+            str=40*70*1.0;
+            str+=(80-40)*80*1.0;
+            str+=(sum-80)*85*1.0;
+
+            str1=40*92.5;
+            str1+=(80-40)*102.5;
+            str1+=(sum-80)*107.5;
+        }
+
+        System.out.println("六件套价格："+str+"元");
+        System.out.println("九件套价格："+str1+"元");
+///------------------------
+    /*    if (sun<40){
+            str=sun*70*1.0;
+
+        }
+        if (sun>=40&&sun<80){
+            str=40*70*1.0;
+            str+=(sun-40)*80*1.0;
+
+        }
+        if (sun>=80){
+            str=40*70*1.0;
+            str+=(80-40)*80*1.0;
+            str+=(sun-80)*85*1.0;
+
+        }
+        if (sun1<40){
+            str1=sun1*92.5;
+        }
+        if (sun1>=40&&sun1<80){
+
+            //九件套
+            str1=40*92.5;
+            str1+=(sun1-40)*102.5*1.0;
+        }
+        if (sun1>=80){
+            str1=40*92.5;
+            str1+=(80-40)*102.5;
+            str1+=(sun1-80)*107.5;
+        }
+        System.out.println("六件套价格："+str+"元");
+        System.out.println("九件套价格："+str1+"元");*/
     }
 }
