@@ -280,10 +280,10 @@
     <include refid="Base_Column_List" />
     from transporttype
     <where>
-      <if test="transporttype.tName!=null and transporttype.tName!=''">
+      <if test="transporttype!=null and transporttype!='' and transporttype.tName!=null and transporttype.tName!=''">
         t_name like '%'#{transporttype.tName}'%',
       </if>
-      <if test="transporttype.tState!=null and transporttype.tState!=''">
+      <if test="transporttype!=null and transporttype!='' and transporttype.tState!=null and transporttype.tState!=''">
         and t_state = #{transporttype.tState},
       </if>
       <if test="createtime!=null">
@@ -293,6 +293,6 @@
         and t_creattime &lt;=#{endtime}
       </if>
     </where>
-    order by t_id desc limit (#{page},#{limit})
+    order by t_id desc limit #{page},#{limit}
   </select>
 </mapper>

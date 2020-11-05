@@ -88,15 +88,18 @@ public class LegalServiceimpl implements LegalService {
         if (Optional.ofNullable(legalDatabean).isPresent()) {
             LegalExample periodExample = new LegalExample();
             LegalExample.Criteria criteria = periodExample.createCriteria();
-            if (legalDatabean.getLegal().getPain()!=null){
-                criteria.andPainEqualTo(legalDatabean.getLegal().getPain());
+            if(Optional.ofNullable(legalDatabean.getLegal()).isPresent()){
+                if (legalDatabean.getLegal().getPain()!=null){
+                    criteria.andPainEqualTo(legalDatabean.getLegal().getPain());
+                }
+                if (legalDatabean.getLegal().getFlow()!=null){
+                    criteria.andFlowEqualTo(legalDatabean.getLegal().getFlow());
+                }
+                if (legalDatabean.getLegal().getDelay()!=null){
+                    criteria.andDelayEqualTo(legalDatabean.getLegal().getDelay());
+                }
             }
-            if (legalDatabean.getLegal().getFlow()!=null){
-                criteria.andFlowEqualTo(legalDatabean.getLegal().getFlow());
-            }
-            if (legalDatabean.getLegal().getDelay()!=null){
-                criteria.andDelayEqualTo(legalDatabean.getLegal().getDelay());
-            }
+
             if (legalDatabean.getCreatetime()!=null){
                 criteria.andLTimeEqualTo(DateUtiles.parseDefaultDate(legalDatabean.getCreatetime()));
             }
@@ -107,7 +110,7 @@ public class LegalServiceimpl implements LegalService {
                 criteria.andStateEqualTo(legalDatabean.getLegal().getState());
             }
             long count = legalMapper.countByExample(periodExample);
-            legalDatabean.setPage(legalDatabean.getPage() - 1 * legalDatabean.getLimit());
+            legalDatabean.setPage((legalDatabean.getPage() - 1) * legalDatabean.getLimit());
             List<Legal> list = legalMapper.selectLegalAll(legalDatabean);
             if (Optional.ofNullable(list).isPresent()) {
                 Map<String, Object> map = new LinkedHashMap<>();

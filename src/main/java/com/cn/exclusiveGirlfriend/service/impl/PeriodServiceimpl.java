@@ -112,12 +112,15 @@ public class PeriodServiceimpl implements PeriodService {
         if (Optional.ofNullable(periodDataBean).isPresent()) {
             PeriodExample periodExample = new PeriodExample();
             PeriodExample.Criteria criteria = periodExample.createCriteria();
-            if (periodDataBean.getPeriod().getTitle()!=null){
-                criteria.andTitleEqualTo(periodDataBean.getPeriod().getTitle());
+            if(Optional.ofNullable(periodDataBean.getPeriod()).isPresent()){
+                if (periodDataBean.getPeriod().getTitle()!=null){
+                    criteria.andTitleEqualTo(periodDataBean.getPeriod().getTitle());
+                }
+                if (periodDataBean.getPeriod().getState()!=null){
+                    criteria.andStateEqualTo(periodDataBean.getPeriod().getState());
+                }
             }
-            if (periodDataBean.getPeriod().getState()!=null){
-                criteria.andStateEqualTo(periodDataBean.getPeriod().getState());
-            }
+
             if (periodDataBean.getCreatetime()!=null){
                 criteria.andCreattimeGreaterThanOrEqualTo(DateUtiles.parseDefaultDate(periodDataBean.getCreatetime()));
             }
@@ -125,7 +128,7 @@ public class PeriodServiceimpl implements PeriodService {
                 criteria.andCreattimeLessThanOrEqualTo(DateUtiles.parseDefaultDate(periodDataBean.getEndtime()));
             }
             long count = periodMapper.countByExample(periodExample);
-            periodDataBean.setPage(periodDataBean.getPage() - 1 * periodDataBean.getLimit());
+            periodDataBean.setPage((periodDataBean.getPage() - 1) * periodDataBean.getLimit());
             List<Period> list = periodMapper.selectPeriodAll(periodDataBean);
             if (Optional.ofNullable(list).isPresent()) {
                 Map<String, Object> map = new LinkedHashMap<>();

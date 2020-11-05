@@ -89,20 +89,23 @@ public class FeedbackServeimpl implements FeedbackServe {
         if (Optional.ofNullable(feedbackDataBean).isPresent()) {
             FeedbackExample periodExample = new FeedbackExample();
             FeedbackExample.Criteria criteria = periodExample.createCriteria();
-            if (feedbackDataBean.getFeedback().getfState()!=null){
-                criteria.andFStateEqualTo(feedbackDataBean.getFeedback().getfState());
+            if (Optional.ofNullable(feedbackDataBean.getFeedback()).isPresent()){
+                if (feedbackDataBean.getFeedback().getfState()!=null){
+                    criteria.andFStateEqualTo(feedbackDataBean.getFeedback().getfState());
+                }
+                if (feedbackDataBean.getFeedback().getfTitle()!=null){
+                    criteria.andFTitleEqualTo(feedbackDataBean.getFeedback().getfTitle());
+                }
+                if (feedbackDataBean.getCreatetime()!=null){
+                    criteria.andCreatetimeGreaterThanOrEqualTo(DateUtiles.parseDefaultDate(feedbackDataBean.getCreatetime()));
+                }
+                if (feedbackDataBean.getEndtime()!=null){
+                    criteria.andCreatetimeLessThanOrEqualTo(DateUtiles.parseDefaultDate(feedbackDataBean.getEndtime()));
+                }
             }
-            if (feedbackDataBean.getFeedback().getfTitle()!=null){
-                criteria.andFTitleEqualTo(feedbackDataBean.getFeedback().getfTitle());
-            }
-            if (feedbackDataBean.getCreatetime()!=null){
-                criteria.andCreatetimeGreaterThanOrEqualTo(DateUtiles.parseDefaultDate(feedbackDataBean.getCreatetime()));
-            }
-            if (feedbackDataBean.getEndtime()!=null){
-                criteria.andCreatetimeLessThanOrEqualTo(DateUtiles.parseDefaultDate(feedbackDataBean.getEndtime()));
-            }
+
             long count = feedbackMapper.countByExample(periodExample);
-            feedbackDataBean.setPage(feedbackDataBean.getPage() - 1 * feedbackDataBean.getLimit());
+            feedbackDataBean.setPage((feedbackDataBean.getPage() - 1) * feedbackDataBean.getLimit());
             List<Feedback> list = feedbackMapper.selectFeedbackAll(feedbackDataBean);
             if (Optional.ofNullable(list).isPresent()) {
                 Map<String, Object> map = new LinkedHashMap<>();
@@ -125,7 +128,9 @@ public class FeedbackServeimpl implements FeedbackServe {
         if (Optional.ofNullable(feedbackDataBean).isPresent()) {
             FeedbackExample periodExample = new FeedbackExample();
             FeedbackExample.Criteria criteria = periodExample.createCriteria();
-            criteria.andFIdEqualTo(feedbackDataBean.getFeedback().getfId());
+            if (Optional.ofNullable(feedbackDataBean.getFeedback()).isPresent()){
+                criteria.andFIdEqualTo(feedbackDataBean.getFeedback().getfId());
+            }
             List<Feedback> periods = feedbackMapper.selectByExample(periodExample);
             if (Optional.ofNullable(periods).isPresent()) {
                 return new ResultData().ok("请查看数据", periods);

@@ -42,21 +42,24 @@ public class DressServiceimpl implements DressService {
         if (Optional.ofNullable(dressDataBean).isPresent()) {
             DressExample periodExample = new DressExample();
             DressExample.Criteria criteria = periodExample.createCriteria();
-            if (dressDataBean.getDress().getUid()!=null){
-                criteria.andUidEqualTo(dressDataBean.getDress().getUid());
+            if (Optional.ofNullable(dressDataBean.getDress()).isPresent()){
+                if (dressDataBean.getDress().getUid()!=null){
+                    criteria.andUidEqualTo(dressDataBean.getDress().getUid());
+                }
+                if (dressDataBean.getDress().getShoeSize()!=null){
+                    criteria.andShoeSizeEqualTo(dressDataBean.getDress().getShoeSize());
+                }
+                if (dressDataBean.getDress().getSkirtSize()!=null){
+                    criteria.andSkirtSizeEqualTo(dressDataBean.getDress().getSkirtSize());
+                }
+                if (dressDataBean.getDress().getClothesSize()!=null){
+                    criteria.andSkirtSizeEqualTo(dressDataBean.getDress().getClothesSize());
+                }
+                if (dressDataBean.getDress().getTrousersSize()!=null){
+                    criteria.andSkirtSizeEqualTo(dressDataBean.getDress().getTrousersSize());
+                }
             }
-            if (dressDataBean.getDress().getShoeSize()!=null){
-                criteria.andShoeSizeEqualTo(dressDataBean.getDress().getShoeSize());
-            }
-            if (dressDataBean.getDress().getSkirtSize()!=null){
-                criteria.andSkirtSizeEqualTo(dressDataBean.getDress().getSkirtSize());
-            }
-            if (dressDataBean.getDress().getClothesSize()!=null){
-                criteria.andSkirtSizeEqualTo(dressDataBean.getDress().getClothesSize());
-            }
-            if (dressDataBean.getDress().getTrousersSize()!=null){
-                criteria.andSkirtSizeEqualTo(dressDataBean.getDress().getTrousersSize());
-            }
+
             if (dressDataBean.getCreatetime()!=null){
                 criteria.andCreatetimeGreaterThanOrEqualTo(DateUtiles.parseDefaultDate(dressDataBean.getCreatetime()));
             }
@@ -64,7 +67,7 @@ public class DressServiceimpl implements DressService {
                 criteria.andCreatetimeLessThanOrEqualTo(DateUtiles.parseDefaultDate(dressDataBean.getEndtime()));
             }
             long count = dressMapper.countByExample(periodExample);
-            dressDataBean.setPage(dressDataBean.getPage() - 1 * dressDataBean.getLimit());
+            dressDataBean.setPage((dressDataBean.getPage() - 1) * dressDataBean.getLimit());
             List<Dress> list = dressMapper.selectDressAll(dressDataBean);
             if (Optional.ofNullable(list).isPresent()) {
                 Map<String, Object> map = new LinkedHashMap<>();

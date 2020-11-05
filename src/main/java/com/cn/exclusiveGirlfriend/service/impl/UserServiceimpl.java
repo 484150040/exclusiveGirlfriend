@@ -8,6 +8,7 @@ import com.cn.exclusiveGirlfriend.pojo.UserExample;
 import com.cn.exclusiveGirlfriend.service.UserService;
 import com.cn.exclusiveGirlfriend.utiles.DateUtiles;
 import com.cn.exclusiveGirlfriend.utiles.EncryptUtil;
+import com.cn.exclusiveGirlfriend.utiles.FirstLetterUtil;
 import net.sf.ehcache.search.expression.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,11 +43,21 @@ public class UserServiceimpl implements UserService {
     public ResultData addUser(UserDataBean userDataBean) {
         Optional<User> optionalUser=Optional.ofNullable(userDataBean.getUser());
         if (optionalUser.isPresent()){
-            userDataBean.getUser().setUid(DateUtiles.getYear(new Date())+userDataBean
-                    .getUser().getIdentity().length()>0?
-                    Integer.parseInt(userDataBean.getUser().getIdentity()
-                            .substring(userDataBean.getUser().getIdentity().length()-4))
-                    :(int)(Math.random()*1000+1000));
+//            String firstLetter = FirstLetterUtil.getFirstLetter(userDataBean.getUser().getName()).substring(0,1).toUpperCase();
+            String year=String.valueOf(DateUtiles.getYear(new Date()));
+            if (Optional.ofNullable(userDataBean.getUser().getIdentity()).isPresent()){
+                userDataBean.getUser().setUid(DateUtiles.getYear(new Date())+userDataBean
+                        .getUser().getIdentity().length()>0?
+                        Integer.parseInt(year.substring(2)+
+                                userDataBean.getUser().getIdentity()
+                                        .substring(userDataBean.getUser().getIdentity().length()-4))
+                        :Integer.parseInt(year.substring(2)+(int)(Math.random()*1000+1000)));
+                userDataBean.getUser().setIdentity(EncryptUtil.zdyjimi(userDataBean.getUser().getIdentity()));
+            }else {
+                userDataBean.getUser().setUid(Integer.parseInt(year.substring(2)+(int)(Math.random()*1000+1000)));
+            }
+            userDataBean.getUser().setCreatetime(DateUtiles.formatDateByFormat(new Date(),DateUtiles.TIMESTAMP_PATTERN));
+
             try {
                 if (userMapper.insertSelective(userDataBean.getUser())>0){
                     return new ResultData().ok(optionalUser);
@@ -70,7 +81,12 @@ public class UserServiceimpl implements UserService {
     public ResultData updateUserAll(UserDataBean userDataBean) {
         UserExample userExample=new UserExample();
         UserExample.Criteria criteria=userExample.createCriteria();
-        criteria.andUidEqualTo(userDataBean.getUser().getUid());
+        if (Optional.ofNullable(userDataBean.getUser()).isPresent()){
+            criteria.andUidEqualTo(userDataBean.getUser().getUid());
+            if (Optional.ofNullable(userDataBean.getUser().getIdentity()).isPresent()){
+                userDataBean.getUser().setIdentity(EncryptUtil.zdyjimi(userDataBean.getUser().getIdentity()));
+            }
+        }
         Optional<UserExample> optionalUser=Optional.ofNullable(userExample);
         if (optionalUser.isPresent()){
             try {
@@ -122,24 +138,27 @@ public class UserServiceimpl implements UserService {
         if (Optional.ofNullable(userDataBean).isPresent()){
             UserExample userExample=new UserExample();
             UserExample.Criteria criteria=userExample.createCriteria();
-            if (userDataBean.getUser().getName()!=null){
-                criteria.andNameLike(userDataBean.getUser().getName());
+            if (Optional.ofNullable(userDataBean.getUser()).isPresent()){
+                if (Optional.ofNullable(userDataBean.getUser().getName()).isPresent()){
+                    criteria.andNameLike(userDataBean.getUser().getName());
+                }
+                if (Optional.ofNullable(userDataBean.getUser().getSex()).isPresent()){
+                    criteria.andSexEqualTo(userDataBean.getUser().getSex());
+                }
+                if (userDataBean.getUser().getQq()!=null){
+                    criteria.andQqEqualTo(userDataBean.getUser().getQq());
+                }
+                if (userDataBean.getUser().getWechat()!=null){
+                    criteria.andWechatEqualTo(userDataBean.getUser().getWechat());
+                }
+                if (userDataBean.getUser().getIdentity()!=null){
+                    criteria.andIdentityEqualTo(userDataBean.getUser().getIdentity());
+                }
+                if (userDataBean.getUser().getPhone()!=null){
+                    criteria.andPhoneEqualTo(userDataBean.getUser().getPhone());
+                }
             }
-            if (userDataBean.getUser().getSex()!=null){
-                criteria.andSexEqualTo(userDataBean.getUser().getSex());
-            }
-            if (userDataBean.getUser().getQq()!=null){
-                criteria.andQqEqualTo(userDataBean.getUser().getQq());
-            }
-            if (userDataBean.getUser().getWechat()!=null){
-                criteria.andWechatEqualTo(userDataBean.getUser().getWechat());
-            }
-            if (userDataBean.getUser().getIdentity()!=null){
-                criteria.andIdentityEqualTo(userDataBean.getUser().getIdentity());
-            }
-            if (userDataBean.getUser().getPhone()!=null){
-                criteria.andPhoneEqualTo(userDataBean.getUser().getPhone());
-            }
+
             if (userDataBean.getCreatetime()!=null){
                 criteria.andCreatetimeGreaterThanOrEqualTo(userDataBean.getCreatetime());
             }
@@ -147,11 +166,15 @@ public class UserServiceimpl implements UserService {
                 criteria.andCreatetimeLessThanOrEqualTo(userDataBean.getEndtime());
             }
             long count = userMapper.countByExample(userExample);
-            userDataBean.setPage(userDataBean.getPage()-1*userDataBean.getLimit());
+            userDataBean.setPage((userDataBean.getPage()-1)*userDataBean.getLimit());
             List<User> list=userMapper.selectUserAll(userDataBean);
-            for (User user : list) {
-                user.setIdentity(EncryptUtil.zdyjiemi(user.getIdentity()));
+            if (list!=null&&list.size()>0){
+                for (User user : list) {
+                    String str=EncryptUtil.zdyjiemi(user.getIdentity());
+                    user.setIdentity(str.substring(0,4)+"*****"+str.substring(str.length()-4));
+                }
             }
+
             if(Optional.ofNullable(list).isPresent()){
                 Map<String,Object> map=new LinkedHashMap<>();
                 map.put("list",list);
@@ -173,11 +196,14 @@ public class UserServiceimpl implements UserService {
         if (Optional.ofNullable(userDataBean).isPresent()){
             UserExample userExample=new UserExample();
             UserExample.Criteria criteria=userExample.createCriteria();
-           criteria.andUidEqualTo(userDataBean.getUser().getUid());
+            if (Optional.ofNullable(userDataBean.getUser()).isPresent()){
+                criteria.andUidEqualTo(userDataBean.getUser().getUid());
+            }
            List<User> users=userMapper.selectByExample(userExample);
            if (Optional.ofNullable(users).isPresent()){
                for (User user : users) {
-                   user.setIdentity(EncryptUtil.zdyjiemi(user.getIdentity()));
+                   String str=EncryptUtil.zdyjiemi(user.getIdentity());
+                   user.setIdentity(str.substring(0,4)+"*****"+str.substring(str.length()-4));
                    return new ResultData().ok("请查看数据",user);
                }
            }

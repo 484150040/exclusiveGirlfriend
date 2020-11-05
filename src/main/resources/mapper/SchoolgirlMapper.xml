@@ -310,17 +310,17 @@
     <include refid="Base_Column_List" />
     from schoolgirl
     <where>
-      <if test="schoolgirl.sPadcleaning!=null and schoolgirl.sPadcleaning!=''">
+      <if test="schoolgirl!=null and schoolgirl!='' and schoolgirl.sPadcleaning!=null and schoolgirl.sPadcleaning!=''">
         s_padcleaning = #{schoolgirl.sPadcleaning},
       </if>
-      <if test="schoolgirl.sPadsize!=null and schoolgirl.sPadsize!=''">
+      <if test="schoolgirl!=null and schoolgirl!='' and schoolgirl.sPadsize!=null and schoolgirl.sPadsize!=''">
         and s_padsize = #{schoolgirl.sPadsize},
       </if>
-      <if test="schoolgirl.sPadaging!=null and schoolgirl.sPadaging!=''">
+      <if test="schoolgirl!=null and schoolgirl!='' and schoolgirl.sPadaging!=null and schoolgirl.sPadaging!=''">
         and s_padaging = #{schoolgirl.sPadaging},
       </if>
 
     </where>
-    order by a_id desc limit (#{page},#{limit})
+    order by a_id desc limit #{page},#{limit}
   </select>
 </mapper>

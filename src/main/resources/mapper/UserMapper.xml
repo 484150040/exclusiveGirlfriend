@@ -425,22 +425,22 @@
     <include refid="Base_Column_List" />
     from user
     <where>
-      <if test="user.name!=null and user.name!=''">
+      <if test="user!=null and user.name!=null and user.name!=''">
         name like '%'#{user.name,jdbcType=VARCHAR}'%',
       </if>
-      <if test="user.sex!=null and user.sex!=''">
+      <if test="user!=null and user!=null and user.sex!=null and user.sex!=''">
         and sex = #{user.sex,jdbcType=VARCHAR},
       </if>
-      <if test="user.identity !=null and user.identity !=''">
+      <if test="user!=null and user.identity !=null and user.identity !=''">
         and identity = #{user.identity,jdbcType=VARCHAR},
       </if>
-      <if test="user.phone!=null and user.phone!=''">
+      <if test="user!=null and user.phone!=null and user.phone!=''">
         and phone = #{user.phone,jdbcType=VARCHAR},
       </if>
-      <if test="user.weChat!=null and user.weChat!=''">
+      <if test="user!=null and user.weChat!=null and user.weChat!=''">
         and weChat = #{user.wechat,jdbcType=VARCHAR},
       </if>
-      <if test="user.qq!=null and user.qq!=''">
+      <if test="user!=null and user.qq!=null and user.qq!=''">
         and qq = #{user.qq,jdbcType=VARCHAR},
       </if>
       <if test="createtime!=null">
@@ -450,6 +450,6 @@
         and createtime &lt;=#{endtime}
       </if>
     </where>
-    order by uid desc limit (#{page},#{limit})
+    order by uid desc limit #{page},#{limit}
   </select>
 </mapper>

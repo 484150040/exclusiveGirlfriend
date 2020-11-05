@@ -340,16 +340,16 @@
     <include refid="Base_Column_List" />
     from legal
     <where>
-      <if test="legal.state!=null and legal.state!=''">
+      <if test="legal!=null and legal!='' and legal.state!=null and legal.state!=''">
         state = #{legal.state},
       </if>
-      <if test="legal.pain!=null and legal.pain!=''">
+      <if test="legal!=null and legal!='' and legal.pain!=null and legal.pain!=''">
         and pain = #{legal.pain},
       </if>
-      <if test="legal.delay!=null and legal.delay!=''">
+      <if test="legal!=null and legal!='' and legal.delay!=null and legal.delay!=''">
         and delay = #{legal.delay},
       </if>
-      <if test="legal.flow!=null and legal.flow!=''">
+      <if test="legal!=null and legal!='' and legal.flow!=null and legal.flow!=''">
         and flow = #{legal.flow},
       </if>
       <if test="createtime!=null">
@@ -359,7 +359,7 @@
         and l_time &lt;=#{endtime}
       </if>
     </where>
-    order by l_id desc limit (#{page},#{limit})
+    order by l_id desc limit #{page},#{limit}
   </select>
 
 </mapper>

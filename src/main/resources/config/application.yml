@@ -1,8 +1,17 @@
+file:
+  uploadFolder: D://upfile/
+  staticAccessPath: /upfile/**
 spring:
-
+  devtools:
+    restart:
+      enabled: true  #设置开启热部署
+      additional-paths: src/main/java #重启目录
+      exclude: WEB-INF/**
+    freemarker:
+      cache: false    #页面不加载缓存，修改即时生效
   #    kafka配置信息
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: 192.168.0.124:9091
     consumer:
       group-id: kafka2
       auto-offset-reset: earliest

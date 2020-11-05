@@ -305,7 +305,7 @@ public class EncryptUtil {
     public static String zdyjimi(String res){
         String str= EncryptUtil.Base64Encode(res);
         char[] ii=str.toCharArray();
-        System.out.println(ii);
+//        System.out.println(ii);
         StringBuilder stringBuilder=new StringBuilder("");
         for (char c : ii) {
             String bt=EncryptUtil.Base64Encode(c+"");
@@ -339,7 +339,7 @@ public class EncryptUtil {
             stringBuilder1.append(ii1[i]);
             count++;
         }
-        System.out.println(stringBuilder1.toString());
+//        System.out.println(stringBuilder1.toString());
         char[] dd=stringBuilder1.toString().toCharArray();
         List list=new ArrayList();
         StringBuilder stringBuilder2=new StringBuilder();
@@ -361,7 +361,7 @@ public class EncryptUtil {
         }
 //        System.out.println(EncryptUtil.Base64Decode(stringBuilder3.toString()));
 //        Optional.ofNullable(stringBuilder3).ifPresent(u-> System.out.println(u));
-
-        return stringBuilder3.toString();
+        String ss=EncryptUtil.Base64Decode(stringBuilder3.toString());
+        return ss;
     }
 }

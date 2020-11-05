@@ -291,10 +291,10 @@
     <include refid="Base_Column_List" />
     from feedback
     <where>
-      <if test="feedback.fState!=null and feedback.fState!=''">
+      <if test="feedback!=null and feedback！='' and feedback.fState!=null and feedback.fState!=''">
         f_state = #{feedback.fState},
       </if>
-      <if test="feedback.fTitle!=null and feedback.fTitle!=''">
+      <if test="feedback!=null and feedback！='' and feedback.fTitle!=null and feedback.fTitle!=''">
         and f_title = #{feedback.fTitle},
       </if>
       <if test="createtime!=null">
@@ -304,6 +304,6 @@
         and createtime &lt;=#{endtime}
       </if>
     </where>
-    order by uid desc limit (#{page},#{limit})
+    order by uid desc limit #{page},#{limit}
   </select>
 </mapper>

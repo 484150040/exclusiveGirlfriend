@@ -40,12 +40,15 @@ public class TransportTypeServiceimpl implements TransportTypeService {
         if (Optional.ofNullable(transportTypeDataBean).isPresent()) {
             TransporttypeExample periodExample = new TransporttypeExample();
             TransporttypeExample.Criteria criteria = periodExample.createCriteria();
-            if (transportTypeDataBean.getTransporttype().gettName()!=null){
-                criteria.andTNameEqualTo(transportTypeDataBean.getTransporttype().gettName());
+            if (Optional.ofNullable(transportTypeDataBean.getTransporttype()).isPresent()){
+                if (transportTypeDataBean.getTransporttype().gettName()!=null){
+                    criteria.andTNameEqualTo(transportTypeDataBean.getTransporttype().gettName());
+                }
+                if (transportTypeDataBean.getTransporttype().gettState()!=null){
+                    criteria.andTStateEqualTo(transportTypeDataBean.getTransporttype().gettState());
+                }
             }
-            if (transportTypeDataBean.getTransporttype().gettState()!=null){
-                criteria.andTStateEqualTo(transportTypeDataBean.getTransporttype().gettState());
-            }
+
             if (transportTypeDataBean.getCreatetime()!=null){
                 criteria.andTCreattimeGreaterThanOrEqualTo(DateUtiles.parseDefaultDate(transportTypeDataBean.getCreatetime()));
             }
@@ -53,7 +56,7 @@ public class TransportTypeServiceimpl implements TransportTypeService {
                 criteria.andTCreattimeLessThanOrEqualTo(DateUtiles.parseDefaultDate(transportTypeDataBean.getEndtime()));
             }
             long count = transporttypeMapper.countByExample(periodExample);
-            transportTypeDataBean.setPage(transportTypeDataBean.getPage() - 1 * transportTypeDataBean.getLimit());
+            transportTypeDataBean.setPage((transportTypeDataBean.getPage() - 1) * transportTypeDataBean.getLimit());
             List<Transporttype> list = transporttypeMapper.selectTransporttypeAll(transportTypeDataBean);
             if (Optional.ofNullable(list).isPresent()) {
                 Map<String, Object> map = new LinkedHashMap<>();

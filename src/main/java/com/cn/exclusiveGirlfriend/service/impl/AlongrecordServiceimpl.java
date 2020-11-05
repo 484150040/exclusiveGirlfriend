@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @program: exclusiveGirlfriend
@@ -39,26 +36,29 @@ public class AlongrecordServiceimpl implements AlongrecordService {
         if (Optional.ofNullable(alongrecordDataBean).isPresent()) {
             AlongrecordExample periodExample = new AlongrecordExample();
             AlongrecordExample.Criteria criteria = periodExample.createCriteria();
-            if (alongrecordDataBean.getAlongrecord().getaPlace()!=null){
-                criteria.andAPlaceEqualTo(alongrecordDataBean.getAlongrecord().getaPlace());
+            if (Optional.ofNullable(alongrecordDataBean.getAlongrecord()).isPresent()){
+                if (alongrecordDataBean.getAlongrecord().getaPlace()!=null){
+                    criteria.andAPlaceEqualTo(alongrecordDataBean.getAlongrecord().getaPlace());
+                }
+                if (alongrecordDataBean.getATime()!=null){
+                    criteria.andATimeGreaterThanOrEqualTo(DateUtiles.parseDefaultDate(alongrecordDataBean.getATime()));
+                }
+                if (alongrecordDataBean.getATimeendtime()!=null){
+                    criteria.andATimeLessThanOrEqualTo(DateUtiles.parseDefaultDate(alongrecordDataBean.getATimeendtime()));
+                }
+                if (alongrecordDataBean.getCreatetime()!=null){
+                    criteria.andCreatetimeGreaterThanOrEqualTo(DateUtiles.parseDefaultDate(alongrecordDataBean.getCreatetime()));
+                }
+                if (alongrecordDataBean.getEndtime()!=null){
+                    criteria.andCreatetimeLessThanOrEqualTo(DateUtiles.parseDefaultDate(alongrecordDataBean.getEndtime()));
+                }
+                if (alongrecordDataBean.getAlongrecord().getaMeettime()!=null){
+                    criteria.andAMeettimeEqualTo(alongrecordDataBean.getAlongrecord().getaMeettime());
+                }
             }
-            if (alongrecordDataBean.getATime()!=null){
-                criteria.andATimeGreaterThanOrEqualTo(DateUtiles.parseDefaultDate(alongrecordDataBean.getATime()));
-            }
-            if (alongrecordDataBean.getATimeendtime()!=null){
-                criteria.andATimeLessThanOrEqualTo(DateUtiles.parseDefaultDate(alongrecordDataBean.getATimeendtime()));
-            }
-            if (alongrecordDataBean.getCreatetime()!=null){
-                criteria.andCreatetimeGreaterThanOrEqualTo(DateUtiles.parseDefaultDate(alongrecordDataBean.getCreatetime()));
-            }
-            if (alongrecordDataBean.getEndtime()!=null){
-                criteria.andCreatetimeLessThanOrEqualTo(DateUtiles.parseDefaultDate(alongrecordDataBean.getEndtime()));
-            }
-            if (alongrecordDataBean.getAlongrecord().getaMeettime()!=null){
-                criteria.andAMeettimeEqualTo(alongrecordDataBean.getAlongrecord().getaMeettime());
-            }
+
             long count = alongrecordMapper.countByExample(periodExample);
-            alongrecordDataBean.setPage(alongrecordDataBean.getPage() - 1 * alongrecordDataBean.getLimit());
+            alongrecordDataBean.setPage((alongrecordDataBean.getPage() - 1) * alongrecordDataBean.getLimit());
             List<Alongrecord> list = alongrecordMapper.selectAlongrecordAll(alongrecordDataBean);
             if (Optional.ofNullable(list).isPresent()) {
                 Map<String, Object> map = new LinkedHashMap<>();
@@ -80,6 +80,7 @@ public class AlongrecordServiceimpl implements AlongrecordService {
     public ResultData insertAlongrecord(AlongrecordDataBean alongrecordDataBean) {
         Optional<Alongrecord> optionalUser = Optional.ofNullable(alongrecordDataBean.getAlongrecord());
         if (optionalUser.isPresent()) {
+            alongrecordDataBean.getAlongrecord().setCreatetime(new Date());
             try {
                 if (alongrecordMapper.insertSelective(alongrecordDataBean.getAlongrecord()) > 0) {
                     return new ResultData().ok(optionalUser);
@@ -103,19 +104,23 @@ public class AlongrecordServiceimpl implements AlongrecordService {
     public ResultData updateAlongrecord(AlongrecordDataBean alongrecordDataBean) {
         AlongrecordExample alongrecordExample = new AlongrecordExample();
         AlongrecordExample.Criteria criteria = alongrecordExample.createCriteria();
-        criteria.andAIdEqualTo(alongrecordDataBean.getAlongrecord().getaId());
-        Optional<AlongrecordExample> optionalUser = Optional.ofNullable(alongrecordExample);
-        if (optionalUser.isPresent()) {
-            try {
-                if (alongrecordMapper.updateByExampleSelective(alongrecordDataBean.getAlongrecord(), alongrecordExample) > 0 ? true : false) {
-                    return new ResultData().ok(optionalUser);
+        if (Optional.ofNullable(alongrecordDataBean.getAlongrecord()).isPresent()){
+            criteria.andAIdEqualTo(alongrecordDataBean.getAlongrecord().getaId());
+            Optional<AlongrecordExample> optionalUser = Optional.ofNullable(alongrecordExample);
+            if (optionalUser.isPresent()) {
+                try {
+                    if (alongrecordMapper.updateByExampleSelective(alongrecordDataBean.getAlongrecord(), alongrecordExample) > 0 ? true : false) {
+                        return new ResultData().ok(optionalUser);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return new ResultData().error();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                return new ResultData().error();
-            }
 
+            }
         }
+
+
         return new ResultData().error();
     }
     /**
@@ -130,11 +135,14 @@ public class AlongrecordServiceimpl implements AlongrecordService {
         if (Optional.ofNullable(alongrecordDataBean).isPresent()) {
             AlongrecordExample alongrecordExample = new AlongrecordExample();
             AlongrecordExample.Criteria criteria = alongrecordExample.createCriteria();
-            criteria.andAIdEqualTo(alongrecordDataBean.getAlongrecord().getaId());
-            List<Alongrecord> periods = alongrecordMapper.selectByExample(alongrecordExample);
-            if (Optional.ofNullable(periods).isPresent()) {
-                return new ResultData().ok("请查看数据", periods);
+            if (Optional.ofNullable(alongrecordDataBean.getAlongrecord()).isPresent()){
+                criteria.andAIdEqualTo(alongrecordDataBean.getAlongrecord().getaId());
+                List<Alongrecord> periods = alongrecordMapper.selectByExample(alongrecordExample);
+                if (Optional.ofNullable(periods).isPresent()) {
+                    return new ResultData().ok("请查看数据", periods);
+                }
             }
+            return new ResultData().error("数据有误");
         }
         return new ResultData().error();
     }

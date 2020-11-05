@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @program: exclusiveGirlfriend
@@ -38,6 +35,7 @@ public class ClockServiceimpl implements ClockService {
     public ResultData addClock(ClockDatabean clockDatabean) {
         Optional<Clock> optionalUser = Optional.ofNullable(clockDatabean.getClock());
         if (optionalUser.isPresent()) {
+            clockDatabean.getClock().setCreatetime(new Date());
             try {
                 if (clockMapper.insertSelective(clockDatabean.getClock()) > 0) {
                     return new ResultData().ok(optionalUser);
@@ -88,7 +86,9 @@ public class ClockServiceimpl implements ClockService {
         if (Optional.ofNullable(clockDatabean).isPresent()) {
             ClockExample periodExample = new ClockExample();
             ClockExample.Criteria criteria = periodExample.createCriteria();
-            criteria.andClIdEqualTo(clockDatabean.getClock().getClId());
+            if (clockDatabean.getClock()!=null){
+                criteria.andClIdEqualTo(clockDatabean.getClock().getClId());
+            }
             List<Clock> periods = clockMapper.selectByExample(periodExample);
             if (Optional.ofNullable(periods).isPresent()) {
                 return new ResultData().ok("请查看数据", periods);
@@ -108,18 +108,21 @@ public class ClockServiceimpl implements ClockService {
         if (Optional.ofNullable(clockDatabean).isPresent()) {
             ClockExample periodExample = new ClockExample();
             ClockExample.Criteria criteria = periodExample.createCriteria();
-            if (clockDatabean.getClock().getClTitle()!=null){
-                criteria.andClTitleEqualTo(clockDatabean.getClock().getClTitle());
+            if (Optional.ofNullable(clockDatabean.getClock()).isPresent()){
+                if (clockDatabean.getClock().getClTitle()!=null){
+                    criteria.andClTitleEqualTo(clockDatabean.getClock().getClTitle());
+                }
+                if (clockDatabean.getClock().getClContent()!=null){
+                    criteria.andClContentEqualTo(clockDatabean.getClock().getClContent());
+                }
+                if (clockDatabean.getClock().getClState()!=null){
+                    criteria.andClStateEqualTo(clockDatabean.getClock().getClState());
+                }
+                if (clockDatabean.getClock().getCirculation()!=null){
+                    criteria.andCirculationEqualTo(clockDatabean.getClock().getCirculation());
+                }
             }
-            if (clockDatabean.getClock().getClContent()!=null){
-                criteria.andClContentEqualTo(clockDatabean.getClock().getClContent());
-            }
-            if (clockDatabean.getClock().getClState()!=null){
-                criteria.andClStateEqualTo(clockDatabean.getClock().getClState());
-            }
-            if (clockDatabean.getClock().getCirculation()!=null){
-                criteria.andCirculationEqualTo(clockDatabean.getClock().getCirculation());
-            }
+
             if (clockDatabean.getCreatetime()!=null){
                 criteria.andCreatetimeGreaterThanOrEqualTo(DateUtiles.parseDefaultDate(clockDatabean.getCreatetime()));
             }
@@ -127,7 +130,7 @@ public class ClockServiceimpl implements ClockService {
                 criteria.andCreatetimeLessThanOrEqualTo(DateUtiles.parseDefaultDate(clockDatabean.getEndtime()));
             }
             long count = clockMapper.countByExample(periodExample);
-            clockDatabean.setPage(clockDatabean.getPage() - 1 * clockDatabean.getLimit());
+            clockDatabean.setPage((clockDatabean.getPage() - 1) * clockDatabean.getLimit());
             List<Clock> list = clockMapper.selectClockAll(clockDatabean);
             if (Optional.ofNullable(list).isPresent()) {
                 Map<String, Object> map = new LinkedHashMap<>();

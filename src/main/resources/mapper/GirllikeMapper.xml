@@ -343,16 +343,16 @@
     <include refid="Base_Column_List" />
     from girllike
     <where>
-      <if test="girllike.glName!=null and girllike.glName!=''">
+      <if test="girllike!=null and girllike！='' and girllike.glName!=null and girllike.glName!=''">
         gl_name like '%'#{girllike.glName}'%',
       </if>
-      <if test="girllike.glType!=null and girllike.glType!=''">
+      <if test="girllike!=null and girllike！='' and girllike.glType!=null and girllike.glType!=''">
         and gl_type = #{girllike.glType},
       </if>
-      <if test="girllike.glLevel!=null and girllike.glLevel!=''">
+      <if test="girllike!=null and girllike！='' and girllike.glLevel!=null and girllike.glLevel!=''">
         and gl_level = #{girllike.glLevel},
       </if>
-      <if test="girllike.glState!=null and girllike.glState!=''">
+      <if test="girllike!=null and girllike！='' and girllike.glState!=null and girllike.glState!=''">
         and gl_state = #{girllike.glState},
       </if>
       <if test="createtime!=null">
@@ -362,6 +362,6 @@
         and createtime &lt;=#{endtime}
       </if>
     </where>
-    order by gl_id desc limit (#{page},#{limit})
+    order by gl_id desc limit #{page},#{limit}
   </select>
 </mapper>

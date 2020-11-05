@@ -38,19 +38,20 @@ public class SchoolgirlServiceimpl implements SchoolgirlService {
         if (Optional.ofNullable(schoolgirlDataBean).isPresent()) {
             SchoolgirlExample periodExample = new SchoolgirlExample();
             SchoolgirlExample.Criteria criteria = periodExample.createCriteria();
-            if (schoolgirlDataBean.getSchoolgirl().getsPadcleaning()!=null){
-                criteria.andSPadcleaningEqualTo(schoolgirlDataBean.getSchoolgirl().getsPadcleaning());
-            }
-            if (schoolgirlDataBean.getSchoolgirl().getsPadsize()!=null){
-                criteria.andSPadsizeEqualTo(schoolgirlDataBean.getSchoolgirl().getsPadsize());
-            }
-            if (schoolgirlDataBean.getSchoolgirl().getsPadaging()!=null){
-                criteria.andSPadagingEqualTo(schoolgirlDataBean.getSchoolgirl().getsPadaging());
-            }
+            if (Optional.ofNullable(schoolgirlDataBean.getSchoolgirl()).isPresent()){
+                if (schoolgirlDataBean.getSchoolgirl().getsPadcleaning()!=null){
+                    criteria.andSPadcleaningEqualTo(schoolgirlDataBean.getSchoolgirl().getsPadcleaning());
+                }
+                if (schoolgirlDataBean.getSchoolgirl().getsPadsize()!=null){
+                    criteria.andSPadsizeEqualTo(schoolgirlDataBean.getSchoolgirl().getsPadsize());
+                }
+                if (schoolgirlDataBean.getSchoolgirl().getsPadaging()!=null){
+                    criteria.andSPadagingEqualTo(schoolgirlDataBean.getSchoolgirl().getsPadaging());
+                }
 
-
+            }
             long count = schoolgirlMapper.countByExample(periodExample);
-            schoolgirlDataBean.setPage(schoolgirlDataBean.getPage() - 1 * schoolgirlDataBean.getLimit());
+            schoolgirlDataBean.setPage((schoolgirlDataBean.getPage() - 1) * schoolgirlDataBean.getLimit());
             List<Schoolgirl> list = schoolgirlMapper.selectSchoolgirlAll(schoolgirlDataBean);
             if (Optional.ofNullable(list).isPresent()) {
                 Map<String, Object> map = new LinkedHashMap<>();

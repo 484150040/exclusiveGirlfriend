@@ -333,10 +333,10 @@
     <include refid="Base_Column_List" />
     from alongrecord
     <where>
-      <if test="alongrecord.aPlace!=null and alongrecord.aPlace!=''">
+      <if test="alongrecord!=null and alongrecord!='' and alongrecord.aPlace!=null and alongrecord.aPlace!=''">
         a_place = #{alongrecord.aPlace},
       </if>
-      <if test="alongrecord.aMeettime!=null and alongrecord.aMeettime!=''">
+      <if test="alongrecord!=null and alongrecord!='' and alongrecord.aMeettime!=null and alongrecord.aMeettime!=''">
         and a_meettime = #{alongrecord.aMeettime},
       </if>
       <if test="createtime!=null">
@@ -352,6 +352,6 @@
         and a_time &lt;=#{endtime}
       </if>
     </where>
-    order by a_id desc limit (#{page},#{limit})
+    order by a_id desc limit #{page},#{limit}
   </select>
 </mapper>

@@ -280,10 +280,10 @@
     <include refid="Base_Column_List" />
     from period
     <where>
-      <if test="period.title!=null and period.title!=''">
+      <if test="period!=null and period!='' and period.title!=null and period.title!=''">
         title = #{period.title},
       </if>
-      <if test="period.state!=null and period.state!=''">
+      <if test="period!=null and period!='' and period.state!=null and period.state!=''">
         and state = #{period.sex},
       </if>
       <if test="createtime!=null">
@@ -293,6 +293,6 @@
         and creattime &lt;=#{endtime}
       </if>
     </where>
-    order by p_id desc limit (#{page},#{limit})
+    order by p_id desc limit #{page},#{limit}
   </select>
 </mapper>

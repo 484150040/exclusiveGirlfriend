@@ -311,19 +311,19 @@
     <include refid="Base_Column_List" />
     from clock
     <where>
-      <if test="clock.clTitle!=null and clock.clTitle!=''">
+      <if test="clock!=null and clock!='' and clock.clTitle!=null and clock.clTitle!=''">
         cl_title like '%'#{clock.clTitle}'%',
       </if>
-      <if test="clock.clPlace!=null and clock.clPlace!=''">
+      <if test="clock!=null and clock!='' and clock.clPlace!=null and clock.clPlace!=''">
         and cl_place = #{clock.clPlace},
       </if>
-      <if test="clock.clContent!=null and clock.clContent!=''">
+      <if test="clock!=null and clock!='' and clock.clContent!=null and clock.clContent!=''">
         and cl_content = #{clock.clContent},
       </if>
-      <if test="clock.clState!=null and clock.clState!=''">
+      <if test="clock!=null and clock!='' and clock.clState!=null and clock.clState!=''">
         and cl_state = #{clock.clState},
       </if>
-      <if test="clock.circulation!=null and clock.circulation!=''">
+      <if test="clock!=null and clock!='' and clock.circulation!=null and clock.circulation!=''">
         and circulation = #{clock.circulation},
       </if>
       <if test="createtime!=null">
@@ -333,6 +333,6 @@
         and createtime &lt;=#{endtime}
       </if>
     </where>
-    order by cl_id desc limit (#{page},#{limit})
+    order by cl_id desc limit #{page},#{limit}
   </select>
 </mapper>
