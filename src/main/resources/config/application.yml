@@ -9,7 +9,48 @@ spring:
       exclude: WEB-INF/**
     freemarker:
       cache: false    #页面不加载缓存，修改即时生效
+      #总的配置文件
+  # eurka server的名字
+#  application:
+#    name: springcloud-server
+#  cloud:
+#    config:
+#      label: master   # 远程主干分支，可以修改为其余分支
+#      server:
+#        git:
+#          uri: https://gitee.com/qingfeng_484150040/consumption  # 远程项目
+#          search-paths: config  # 远程目录
+#          username:  #  公共仓库，不需要用户名和密码
+#          password:  #  公共仓库，不需要用户名和密码
   #    kafka配置信息
+#服务端
+#  server:
+#    port: 9601  # 三个注册中心，分别为9601、9602、9603
+#
+#  eureka:
+#    instance:
+#      hostname: eureka001
+#    client:
+#      #    registerWithEureka: false       # 默认为true 代表即是server也是client
+#      #    fetchRegistry: false            # 默认为true 代表启用检索服务，三个服务中心相互复制数据
+#      serviceUrl:
+#        # 三个服务中心相互注册，9601注册9602和9603,9602注册9601和9603,9603注册9601和9602
+#        defaultZone: http://localhost:8621/eureka/,http://localhost:9602/eureka/,http://localhost:9603/eureka/
+#
+#  # eurka server的名字
+#  spring:
+#    application:
+#      name: eureka-service001  # 三个服务中心分别为001、002、003
+
+
+  #客户端
+#  eureka:
+#    instance:
+#      hostname: localhost
+#    client:
+#      serviceUrl:
+#        #  这里的地址，必须是server的路径，并且必须是eureka的后缀路径
+#        defaultZone: http://localhost:8621/eureka/
   kafka:
     bootstrap-servers: 192.168.0.124:9091
     consumer:

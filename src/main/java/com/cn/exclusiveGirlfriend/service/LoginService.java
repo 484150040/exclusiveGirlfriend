@@ -41,4 +41,13 @@ public interface LoginService {
      * @return boolean
      **/
     ResultData updatePassword(Login login);
+    /**
+    　　* @description: TODO
+    　　* @Param 修改登录时间以及登录编号
+    　　* @return
+    　　* @throws
+    　　* @author YangFangHong
+    　　* @date 2020/11/17 10:23
+    　　*/
+    boolean updateLoginIp(Login login);
 }

@@ -3,7 +3,6 @@ package com.cn;
 import static org.junit.Assert.assertTrue;
 
 import com.alibaba.druid.sql.visitor.functions.Char;
-import com.cn.exclusiveGirlfriend.utiles.EncryptUtil;
 import com.google.common.base.Joiner;
 import com.google.common.collect.*;
 import org.junit.Test;
@@ -67,7 +66,7 @@ public class AppTest
 
     }*/
 
-
+/*
     public static void main(String[] args) {
         List<String> list = Lists.newArrayList();
         Set<String> set = Sets.newHashSet();
@@ -93,7 +92,7 @@ public class AppTest
     }
 */
 
-    public static void main(String[] args) {
+  /*  public static void main(String[] args) {
 
         Scanner scanner=new Scanner(System.in);
         System.out.println("请输入六件套数量");
@@ -138,7 +137,7 @@ public class AppTest
         System.out.println("六件套价格："+str+"元");
         System.out.println("九件套价格："+str1+"元");
 ///------------------------
-    /*    if (sun<40){
+    *//*    if (sun<40){
             str=sun*70*1.0;
 
         }
@@ -168,6 +167,8 @@ public class AppTest
             str1+=(sun1-80)*107.5;
         }
         System.out.println("六件套价格："+str+"元");
-        System.out.println("九件套价格："+str1+"元");*/
-    }
+        System.out.println("九件套价格："+str1+"元");*//*
+    }*/
+
+
 }

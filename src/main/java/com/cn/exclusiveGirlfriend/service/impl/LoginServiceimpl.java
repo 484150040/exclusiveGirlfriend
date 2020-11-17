@@ -112,4 +112,37 @@ public class LoginServiceimpl implements LoginService {
         }
         return new ResultData().error("数据有误");
     }
+    /**
+     　　* @description: TODO
+     　　* @Param 修改登录时间以及登录编号
+     　　* @return
+     　　* @throws
+     　　* @author YangFangHong
+     　　* @date 2020/11/17 10:23
+     　　*/
+    @Override
+    public boolean updateLoginIp(Login login) {
+        LoginExample loginExample=new LoginExample();
+        LoginExample.Criteria cri = loginExample.createCriteria();
+        cri.andUsernameEqualTo(login.getUsername());
+        List<Login> login1 =  loginMapper.selectByExample(loginExample);
+        if (login1!=null && login1.size()>0){
+            try{
+                for (Login login2 : login1) {
+                    cri.andPasswordEqualTo(login.getPassword());
+                    login2.setLogintime(new Date());
+                    login2.setLoginIp(login.getLoginIp());
+                    if (loginMapper.updateByExample(login2,loginExample)>0){
+                        return true;
+                    }
+                    return false;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+                System.err.println(e.getMessage());
+                return false;
+            }
+        }
+        return false;
+    }
 }

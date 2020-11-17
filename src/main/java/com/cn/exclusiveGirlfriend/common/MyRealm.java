@@ -44,6 +44,7 @@ public class MyRealm extends AuthorizingRealm {
         //2、获取用户对象
         Login login =  userService.getPwdByUserName(userName);
         if (login!=null){
+
             List<Role> list = roleService.findRoleByUser(login.getLid());
             //获取用户对应的角色
             Set<String> roles = roleService.getRolesByUser(list);

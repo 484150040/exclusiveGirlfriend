@@ -5,6 +5,7 @@ import com.cn.exclusiveGirlfriend.common.ResultData;
 import com.cn.exclusiveGirlfriend.dataBean.LoginDataBean;
 import com.cn.exclusiveGirlfriend.pojo.Login;
 import com.cn.exclusiveGirlfriend.service.LoginService;
+import com.cn.exclusiveGirlfriend.utiles.AddressUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -55,7 +57,13 @@ public class LoginController {
             UsernamePasswordToken token = new UsernamePasswordToken(loginDataBean.getLogin().getUsername(),
                     loginDataBean.getLogin().getPassword());
             //6、登录
+            Login login=new Login();
+            if (login!=null){
+                login.setLoginIp(AddressUtils.getIpAddr(request));
+                loginService.updateLoginIp(login);
+            }
             subject.login(token);
+
 //            //7、检测是否认证
             System.out.println(subject.isAuthenticated());
 ////            //检测是否有相应的角色

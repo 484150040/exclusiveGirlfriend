@@ -214,6 +214,9 @@
       <if test="record.logintime != null">
         logintime = #{record.logintime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.loginIp != null">
+        loginIp = #{record.loginIp,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -229,7 +232,8 @@
       username = #{record.username,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
       creatime = #{record.creatime,jdbcType=TIMESTAMP},
-      logintime = #{record.logintime,jdbcType=TIMESTAMP}
+      logintime = #{record.logintime,jdbcType=TIMESTAMP},
+    loginIp = #{record.loginIp,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

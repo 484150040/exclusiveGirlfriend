@@ -67,8 +67,10 @@ public class IdentifyImageUtile {
 }
     public static String getWords(String img){
         try {
+            //解析图片
             String s=getImgtext(img);
             System.out.println(s);
+            //图片路径或者文件找不到
             if (s.contains("302")==false){
                 Map maps = (Map) JSON.parse(s);
                 JSONObject str=null;
@@ -113,4 +115,7 @@ public class IdentifyImageUtile {
             e.printStackTrace();
         }
     }
+
+
+
 }
